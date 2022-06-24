@@ -40,11 +40,16 @@ export default function Task(props) {
                     !isEdit ? (
                         <button onClick={onClickEdit}>Edit</button>
                     ) : (
-                        <button onClick={() => (props.updateTask(editedTask), onClickSave())}>Save</button>
+                        <button
+                            onClick={() => (
+                                props.updateTask(editedTask, props.task.id),
+                                onClickSave()
+                            )}
+                        >Save</button>
                     )
                 }
             </div>
 
-        </div>
+        </div >
     )
 }

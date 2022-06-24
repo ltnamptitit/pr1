@@ -1,68 +1,77 @@
-import './App.css';
-import Filter from './components/Filter/Filter';
-import InputForm from './components/InputForm/InputForm';
-// import TaskList from './components/TaskList/TaskList';
+import './App.scss';
 import Task from './components/Task/Task';
 
-import React, { Component } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import Form from './components/InputForm/Form';
 
-export class App extends Component {
+//initial local storage
+let localList = [];
+try {
+	const lists = JSON.parse(localStorage.getItem('lists'))
+	if (Array.isArray(lists)) {
+		localList = [...lists]
+	}
+}
+catch {
 
-	state = {
-		todoList: []
+}
+
+export default function App() {
+
+	const [lists, setLists] = useState(localList)
+
+	const saveData = (list_) => {
+		localStorage.setItem('lists', JSON.stringify(list_))
 	}
 
-	addTask = (task) => {
-		if (!task.trim()) {
-			alert('please input your task')
+	const saveList = (list_) => {
+		setLists(list_)
+		saveData(list_)
+	}
+
+	const addTask = (text) => {
+		if (!text.trim()) {
+			alert('please enter your task')
 			return;
 		}
 		const newTask = {
 			id: uuidv4(),
-			task: task.trim(),
+			task: text.trim(),
 			isDone: false
 		}
-		this.setState({
-			todoList: [...this.state.todoList, newTask]
+		saveList([...lists, newTask])
+	}
+
+	const deleteTask = (id) => {
+		const taskIndex = lists.findIndex(task => {
+			return task.id === id
 		})
+		lists.splice(taskIndex, 1)
+		saveList([...lists])
 	}
 
-	deleteTask = (taskID) => {
-		const newState = this.state.todoList.filter(item => item.id !== taskID)
-		this.setState({
-			todoList: [...newState]
-		})
+	const updateTask = (text, id) => {
+		saveList([...lists.map(item => {
+			return item.id === id ? { ...item, task: text } : item
+		})])
 	}
 
-	updateTask = (task) => {
-		console.log(task)
-	}
-
-	// componentDidUpdate() {
-	// 	console.log(this.state.todoList)
-	// }
-	render() {
-		return (
-			<div className='App'>
-				<InputForm addTask={this.addTask} />
-				<Filter />
-				{/* <TaskList todoList={this.state.todoList} /> */}
-				<div className='taskList-container'>
-					{
-						this.state.todoList.map((item) => {
-							return <Task
-								key={item.id}
-								task={item}
-								deleteTask={this.deleteTask}
-								updateTask={this.updateTask}
-							/>
-						})
-					}
-				</div>
+	return (
+		<div className='App'>
+			<Form addTask={addTask} />
+			<div className='taskList-container'>
+				{
+					lists.map((item) => {
+						return <Task
+							key={item.id}
+							task={item}
+							deleteTask={deleteTask}
+							updateTask={updateTask}
+						/>
+					})
+				}
 			</div>
-		)
-	}
+		</div>
+	)
 }
-
-export default App
