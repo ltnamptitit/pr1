@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux/es/hooks/useDispatch'
+import { deleteTask, updateTask } from '../../redux/action'
 
 import './style.scss'
 export default function Task(props) {
 
-    // const onClickDeleteButton = () => {
-    //     console.log(props.task.id)
-    // }
-
     const [isEdit, setIsEdit] = useState(false)
     const [editedTask, setEditedTask] = useState(props.task.task)
+    const dispatch = useDispatch()
 
     const onClickEdit = () => {
         setIsEdit(!isEdit)
@@ -18,12 +17,25 @@ export default function Task(props) {
         setIsEdit(!isEdit)
     }
 
+    const handleDeleteButtonClick = () => {
+        dispatch(deleteTask(props.task))
+    }
+
+    const handleUpdateButtonClick = () => {
+        dispatch(updateTask({
+            ...props.task,
+            task: editedTask
+        }))
+    }
     return (
 
         <div className='task'>
             {
                 !isEdit ? (
-                    <div className='task-content'>{editedTask}-{isEdit.toString()}</div>
+                    <div
+                        className='task-content'
+                        onClick={() => setIsEdit(!isEdit)}
+                    >{editedTask}-{isEdit.toString()}</div>
 
                 ) : (
                     <input
@@ -34,7 +46,7 @@ export default function Task(props) {
             }
             <div className='button-container'>
                 <button
-                    onClick={() => props.deleteTask(props.task.id)}
+                    onClick={() => handleDeleteButtonClick()}
                 >Delete</button>
                 {
                     !isEdit ? (
@@ -42,7 +54,7 @@ export default function Task(props) {
                     ) : (
                         <button
                             onClick={() => (
-                                props.updateTask(editedTask, props.task.id),
+                                handleUpdateButtonClick(),
                                 onClickSave()
                             )}
                         >Save</button>
