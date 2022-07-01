@@ -9,11 +9,9 @@ export default function Task(props) {
     const [editedTask, setEditedTask] = useState(props.task.task)
     const dispatch = useDispatch()
 
-    const onClickEdit = () => {
-        setIsEdit(!isEdit)
-    }
 
-    const onClickSave = () => {
+    const handleUpdate = () => {
+        handleUpdateButtonClick()
         setIsEdit(!isEdit)
     }
 
@@ -27,20 +25,30 @@ export default function Task(props) {
             task: editedTask
         }))
     }
+
+    const onKeyPressEnter = (event) => {
+        if (event.keyCode == 13) {
+            handleUpdate()
+
+        }
+    }
     return (
 
-        <div className='task'>
+        <div className='task' >
             {
                 !isEdit ? (
                     <div
                         className='task-content'
                         onClick={() => setIsEdit(!isEdit)}
-                    >{editedTask}-{isEdit.toString()}</div>
+                    >
+                        {editedTask}
+                    </div>
 
                 ) : (
                     <input
                         value={editedTask}
                         onChange={(event) => setEditedTask(event.target.value)}
+                        onKeyDown={(event) => onKeyPressEnter(event)}
                     />
                 )
             }
@@ -50,13 +58,10 @@ export default function Task(props) {
                 >Delete</button>
                 {
                     !isEdit ? (
-                        <button onClick={onClickEdit}>Edit</button>
+                        <button onClick={() => setIsEdit(!isEdit)}>Edit</button>
                     ) : (
                         <button
-                            onClick={() => (
-                                handleUpdateButtonClick(),
-                                onClickSave()
-                            )}
+                            onClick={() => handleUpdate()}
                         >Save</button>
                     )
                 }

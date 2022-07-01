@@ -1,10 +1,7 @@
-import './App.scss';
-import React, { useState } from 'react';
 import { useSelector } from 'react-redux/es/exports';
-import { v4 as uuidv4 } from 'uuid';
-import Task from './components/Task/Task';
+import './App.scss';
 import Form from './components/InputForm/Form';
-import { addTask } from './redux/action'
+import Task from './components/Task/Task';
 
 export default function App() {
 

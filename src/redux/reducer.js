@@ -1,11 +1,11 @@
 const initState = {
-    lists: [],
-    todo: []
+    lists: []
 }
 
 const rootReduder = (state = initState, action) => {
     switch (action.type) {
         case 'lists/addTodo':
+            console.log(state)
             return {
                 ...state,
                 lists: [
