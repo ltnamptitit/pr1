@@ -1,11 +1,20 @@
-import { useSelector } from 'react-redux/es/exports';
-import './App.scss';
 import Form from './components/InputForm/Form';
 import Task from './components/Task/Task';
+import { useSelector } from 'react-redux/es/exports';
+import { db } from './firebase';
+import { collection, getDocs } from 'firebase/firestore';
+
+import './App.scss';
 
 export default function App() {
-
 	const lists = useSelector(state => state.lists)
+	const dataRef = collection(db, 'todo-list')
+
+	const getData = async () => {
+		const data = await getDocs(dataRef)
+		console.log(data.docs.map(doc => doc.data()))
+	}
+	// getData()
 
 
 	return (

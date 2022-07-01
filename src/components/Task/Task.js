@@ -27,7 +27,7 @@ export default function Task(props) {
     }
 
     const onKeyPressEnter = (event) => {
-        if (event.keyCode == 13) {
+        if (event.keyCode === 13) {
             handleUpdate()
 
         }

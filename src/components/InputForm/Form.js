@@ -25,7 +25,7 @@ export default function Form(props) {
     }
 
     const onKeyPressEnter = (event) => {
-        if (event.keyCode == 13) {
+        if (event.keyCode === 13) {
             handleAddButtonClick()
             setInput('')
         }
