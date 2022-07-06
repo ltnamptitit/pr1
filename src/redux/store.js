@@ -1,43 +1,38 @@
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
 import { createStore } from "redux";
-import rootReducer from './reducer'
+import rootReducer from "./reducer";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-// const store = createStore(rootReducer, initValue, enhancers);
-function loadFromLocalStage() {
+const composedEnhancers = composeWithDevTools()
+
+const loadFromLocalStorage = () => {
+	const initState = {
+		todoList: []
+	}
 	try {
-		const lists = JSON.parse(localStorage.getItem('lists'))
-		if (lists) {
-			return lists
+		const todoList = JSON.parse(localStorage.getItem('todoList'))
+		if (todoList) {
+			return {
+				...initState,
+				todoList: [...todoList]
+			}
 		}
-		else return undefined
-	}
-	catch (e) {
-		console.warn(e)
-		return undefined
-	}
-}
-function saveToLocalStorage(state) {
-	try {
-		const lists = JSON.stringify(state)
-		localStorage.setItem('lists', lists)
+		else {
+			return initState
+		}
 	}
 	catch (e) {
 		console.log(e)
+		return initState
 	}
 }
 
-const data = async () => {
-	const dataRef = collection(db, 'todo-list')
-	const dataFromFirebase = await getDocs(dataRef)
-	const data1 = dataFromFirebase.docs.map(doc => doc.data())
-	return data1;
+const saveToLocalStorage = (state) => {
+	// console.log(state) 
+	const todoList = JSON.stringify(state.todoList)
+	localStorage.setItem('todoList', todoList)
 }
 
-console.log(data())
-// getDataFromFireBase()
-const store = createStore(rootReducer, data())
-
-store.subscribe(() => saveToLocalStorage(store.getState()));
+const store = createStore(rootReducer, loadFromLocalStorage(), composedEnhancers)
+store.subscribe(() => saveToLocalStorage(store.getState()))
 
 export default store;

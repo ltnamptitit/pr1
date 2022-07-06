@@ -1,20 +1,20 @@
-export const addTask = (newTask) => {
+export const addTodo = (todo) => {
     return {
-        type: 'lists/addTodo',
-        payload: newTask
+        type: 'LIST/ADD_TODO',
+        payload: todo
     }
 }
 
-export const updateTask = (editedTask) => {
+export const deleteTodo = (todo) => {
     return {
-        type: 'lists/updateTodo',
-        payload: editedTask
+        type: 'LIST/DELETE_TODO',
+        payload: todo
     }
 }
 
-export const deleteTask = (deleteTask) => {
+export const editTodo = (editedTodo) => {
     return {
-        type: 'lists/deleteTodo',
-        payload: deleteTask
+        type: 'LIST/UPDATE_TODO',
+        payload: editedTodo
     }
 }

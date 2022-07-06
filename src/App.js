@@ -1,35 +1,134 @@
-import Form from './components/InputForm/Form';
-import Task from './components/Task/Task';
-import { useSelector } from 'react-redux/es/exports';
-import { db } from './firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { Button, Input } from 'antd';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+import { addTodo, deleteTodo, editTodo } from './redux/action';
+import { Container, InputFormContainer, Label, ListContainer, TodoItem, TodoList, TodoWrapper } from './styledComponent';
 
-import './App.scss';
+import 'antd/dist/antd.min.css';
+import './App.css';
+import Todo from './components/Todo';
 
-export default function App() {
-	const lists = useSelector(state => state.lists)
-	const dataRef = collection(db, 'todo-list')
+function App() {
+	const todo = useSelector(state => state.todoList)
+	const [input, setInput] = useState('')
+	const [isEdit, setIsEdit] = useState(false)
+	const [itemEdited, setItemEdited] = useState({})
+	const dispatch = useDispatch()
 
-	const getData = async () => {
-		const data = await getDocs(dataRef)
-		console.log(data.docs.map(doc => doc.data()))
+	const onClickAdd = () => {
+		if (input.trim()) {
+			dispatch(addTodo({
+				id: uuidv4(),
+				task: input,
+				isDone: false
+			}))
+		}
+		else return
+		setInput('')
 	}
-	// getData()
+
+	const onPressEnter = (e) => {
+		if (e.keyCode === 13) {
+			if (isEdit) {
+				dispatch(editTodo({ ...itemEdited, task: input }))
+				setIsEdit(!isEdit)
+				setInput('')
+				return
+			}
+			onClickAdd()
+		}
+		return
+	}
+
+	// const onClickEdit = (item) => {
+	// 	setIsEdit(!isEdit);
+	// 	setInput(item.task);
+	// 	
+	// }
+
+	// const onClickDelete = (obj) => {
+	// 	dispatch(deleteTodo(obj))
+	// }
+
+	const onClickEdit = (obj) => {
+		setInput(obj.task)
+		setIsEdit(true)
+		setItemEdited({ ...obj });
+	}
+
+	const onClickDelete = (item) => {
+		dispatch(deleteTodo(item))
+	}
 
 
 	return (
-		<div className='App'>
-			<Form />
-			<div className='taskList-container'>
-				{
-					lists.map((item) => {
-						return <Task
-							key={item.id}
-							task={item}
-						/>
-					})
-				}
-			</div>
+		<div className="App">
+			<Container>
+				<InputFormContainer>
+					<Input
+						allowClear
+						value={input}
+						onChange={(e) => { setInput(e.target.value) }}
+						onKeyDown={(e) => onPressEnter(e)}
+					/>
+					<span>
+						{
+							isEdit ? <Button
+								type='primary'
+								onClick={() => {
+									dispatch(editTodo({ ...itemEdited, task: input }));
+									setIsEdit(!isEdit);
+									setInput('')
+								}}
+							>
+								Save
+							</Button> : <Button
+								type='primary'
+								onClick={() => onClickAdd()}
+							>
+								Add
+							</Button>
+
+						}
+
+					</span>
+				</InputFormContainer>
+				<TodoList>
+					<ListContainer>
+						<Label>Pending</Label>
+						<TodoWrapper>
+							{
+								todo.filter(item => !item.isDone).map(item => {
+									return <Todo
+										key={item.id}
+										item={item}
+										onClickDelete={onClickDelete}
+										onClickEdit={onClickEdit}
+									/>
+								})
+							}
+						</TodoWrapper>
+					</ListContainer>
+					<ListContainer>
+						<Label>Done</Label>
+						<TodoWrapper>
+							{
+								todo.filter(item => item.isDone).map(item => {
+									return <Todo
+										key={item.id}
+										item={item}
+										onClickDelete={onClickDelete}
+										onClickEdit={onClickEdit}
+									/>
+								})
+							}
+						</TodoWrapper>
+					</ListContainer>
+				</TodoList>
+			</Container>
 		</div>
-	)
+	);
 }
+
+export default App;
