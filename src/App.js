@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { addTodo, deleteTodo, editTodo } from './redux/action';
-import { Container, InputFormContainer, Label, ListContainer, TodoItem, TodoList, TodoWrapper } from './styledComponent';
+import { ButtonWrapper, Container, InputFormContainer, Label, ListContainer, TodoList, TodoWrapper } from './styledComponent';
 
 import 'antd/dist/antd.min.css';
 import './App.css';
@@ -40,17 +40,6 @@ function App() {
 		}
 		return
 	}
-
-	// const onClickEdit = (item) => {
-	// 	setIsEdit(!isEdit);
-	// 	setInput(item.task);
-	// 	
-	// }
-
-	// const onClickDelete = (obj) => {
-	// 	dispatch(deleteTodo(obj))
-	// }
-
 	const onClickEdit = (obj) => {
 		setInput(obj.task)
 		setIsEdit(true)
@@ -67,12 +56,13 @@ function App() {
 			<Container>
 				<InputFormContainer>
 					<Input
+						style={{ height: '50px' }}
 						allowClear
 						value={input}
 						onChange={(e) => { setInput(e.target.value) }}
 						onKeyDown={(e) => onPressEnter(e)}
 					/>
-					<span>
+					<ButtonWrapper>
 						{
 							isEdit ? <Button
 								type='primary'
@@ -89,10 +79,8 @@ function App() {
 							>
 								Add
 							</Button>
-
 						}
-
-					</span>
+					</ButtonWrapper>
 				</InputFormContainer>
 				<TodoList>
 					<ListContainer>

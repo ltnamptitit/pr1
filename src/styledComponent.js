@@ -4,7 +4,6 @@ export const Container = styled.div`
   display: flex;
   background: rgba(73,62,92,0.3);
   flex-direction: column;
-  items-align:center;
   overdlow: hidden;
   width: 70%;
 `;
@@ -18,6 +17,9 @@ export const InputFormContainer = styled.div`
   justify-content: center;
 `;
 
+export const ButtonWrapper = styled.span`
+  margin: 10px 0px;
+`;
 
 export const TodoList = styled.div`
   height: calc(100vh - 150px);
@@ -41,12 +43,12 @@ export const Label = styled.div`
   color: #cfa;
   position: relative;
   top: 0px;
-  
+  font-size: 24px;
 `;
 
 export const TodoItem = styled.div`
   height: 60px;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255,255,255, 0.5);
   border-radius: 5px;
   margin: 10px;
   display: flex;
@@ -65,6 +67,7 @@ export const TodoContent = styled.div`
   pointer-events: none;
   align-items: center;
   color: #fff;
+  font-size: 22px;
 `;
 
 export const IconContainer = styled.div`
@@ -77,8 +80,9 @@ export const IconContainer = styled.div`
 `;
 
 export const IconWrapper = styled.div`
-  opacity: 0.5;
+  opacity: 0.3;
   &:hover{
     opacity:1;
   }
 `;
+
