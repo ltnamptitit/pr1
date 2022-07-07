@@ -1,3 +1,7 @@
+#About this project
+
+This is a mini project about todo app with react-redux and localStorage to store task.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
