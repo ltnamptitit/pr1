@@ -47,7 +47,7 @@ export const Label = styled.div`
 `;
 
 export const TodoItem = styled.div`
-  height: 60px;
+  min-height: 60px;
   border: 1px solid rgba(255,255,255, 0.5);
   border-radius: 5px;
   margin: 10px;
@@ -58,7 +58,7 @@ export const TodoItem = styled.div`
   &:hover{
     background-color: rgba(78, 92, 115,0.7)
   };
-  opacity: ${props => props.isDone ? 0.2 : 1}
+  opacity: ${props => props.isDone ? 0.2 : 1};
 `;
 
 export const TodoContent = styled.div`
@@ -68,6 +68,7 @@ export const TodoContent = styled.div`
   align-items: center;
   color: #fff;
   font-size: 22px;
+  
 `;
 
 export const IconContainer = styled.div`
