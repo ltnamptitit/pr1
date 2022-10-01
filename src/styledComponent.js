@@ -4,8 +4,9 @@ export const Container = styled.div`
   display: flex;
   background: rgba(73,62,92,0.3);
   flex-direction: column;
-  overdlow: hidden;
+  overflow: hidden;
   width: 70%;
+  padding: 0 20px;
 `;
 
 export const InputFormContainer = styled.div`
@@ -58,7 +59,7 @@ export const TodoItem = styled.div`
   &:hover{
     background-color: rgba(78, 92, 115,0.7)
   };
-  opacity: ${props => props.isDone ? 0.2 : 1};
+  opacity: ${props => props.isDone ? 0.4 : 1};
 `;
 
 export const TodoContent = styled.div`
