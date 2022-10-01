@@ -1,5 +1,5 @@
 import { Button, Input } from 'antd';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { addTodo, deleteTodo, editTodo } from './redux/action';
@@ -15,7 +15,7 @@ function App() {
     const [isEdit, setIsEdit] = useState(false)
     const [itemEdited, setItemEdited] = useState({})
     const dispatch = useDispatch()
-
+    const ref = useRef(null)
     const onClickAdd = () => {
         if (input.trim()) {
             dispatch(addTodo({
@@ -27,11 +27,10 @@ function App() {
         else return
         setInput('')
     }
-
     const onPressEnter = (e) => {
         if (e.keyCode === 13) {
-            if (isEdit) {
-                dispatch(editTodo({ ...itemEdited, task: input }))
+            if (isEdit && input) {
+                dispatch(editTodo({ ...itemEdited, task: input.trim() }))
                 setIsEdit(!isEdit)
                 setInput('')
                 return
@@ -42,20 +41,19 @@ function App() {
     }
     const onClickEdit = (obj) => {
         setInput(obj.task)
+        ref.current.focus()
         setIsEdit(true)
         setItemEdited({ ...obj });
     }
-
     const onClickDelete = (item) => {
         dispatch(deleteTodo(item))
     }
-
-
     return (
         <div className="App">
             <Container>
                 <InputFormContainer>
                     <Input
+                        ref={ref}
                         style={{ height: '50px' }}
                         allowClear
                         value={input}
