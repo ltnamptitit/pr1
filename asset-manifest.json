@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/todoApp-with-react-redux-and-LocalStorage/static/css/main.7fbcf3af.css",
-    "main.js": "/todoApp-with-react-redux-and-LocalStorage/static/js/main.fd03b47e.js",
+    "main.js": "/todoApp-with-react-redux-and-LocalStorage/static/js/main.4358140d.js",
     "static/js/787.b4d87f07.chunk.js": "/todoApp-with-react-redux-and-LocalStorage/static/js/787.b4d87f07.chunk.js",
     "static/media/background.jpg": "/todoApp-with-react-redux-and-LocalStorage/static/media/background.135f9148e9d5b23800ea.jpg",
     "index.html": "/todoApp-with-react-redux-and-LocalStorage/index.html",
     "main.7fbcf3af.css.map": "/todoApp-with-react-redux-and-LocalStorage/static/css/main.7fbcf3af.css.map",
-    "main.fd03b47e.js.map": "/todoApp-with-react-redux-and-LocalStorage/static/js/main.fd03b47e.js.map",
+    "main.4358140d.js.map": "/todoApp-with-react-redux-and-LocalStorage/static/js/main.4358140d.js.map",
     "787.b4d87f07.chunk.js.map": "/todoApp-with-react-redux-and-LocalStorage/static/js/787.b4d87f07.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7fbcf3af.css",
-    "static/js/main.fd03b47e.js"
+    "static/js/main.4358140d.js"
   ]
 }
